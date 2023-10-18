@@ -1,0 +1,23 @@
+{% extends "main.html" %}
+{% from "jinja_helpers.html" import render_field %}
+{% block head %}
+Planejamento
+{% endblock %}
+{% block body %}
+<form method="POST" action="{{ url_for('calculate') }}" novalidate>
+    {{ form.csrf_token }}
+    <div class="row">
+        <div class="col-md-8">
+            {{ render_field(form.cep) }}
+            {{ render_field(form.cpf) }}
+            {{ render_field(form.qtd_convidados) }}
+                        &nbsp;
+            <div class="control-group">
+                <div class="controls">
+                    <input class="btn btn-primary" type="submit" value="Calcular Churrasco">
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}
