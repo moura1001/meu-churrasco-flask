@@ -1,7 +1,8 @@
 from flask import Flask, render_template, render_template_string, url_for, redirect, flash
 from flask_wtf import FlaskForm, CSRFProtect
 from wtforms import StringField, IntegerField, validators
-from src import config
+
+from src import config, results
 
 application = Flask(__name__)
 application.secret_key = config.FLASK_SECRET
@@ -34,13 +35,13 @@ def home():
     return render_template("view-form.html", form=form)
 
 
-@application.route("/calculate", methods=['POST'])
+@application.route("/", methods=['POST'])
 def calculate():
-    "Save an employee"
+    "Calculate Churrasco"
     form = CalculateForm()
     if form.validate_on_submit():
         flash("Successfully calculated!")
-        return redirect(url_for("home"))
+        return render_template("view-results.html", info=results.calculate())
     else:
         return render_template("view-form.html", form=form)
 

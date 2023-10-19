@@ -1,0 +1,35 @@
+{% extends "main.html" %}
+{% from "jinja_helpers.html" import render_info %}
+{% block head %}
+Resultado
+<a class="btn btn-primary float-right" href="{{ url_for('home') }}">Home</a>
+{% endblock %}
+{% block body %}
+<div class="row">
+    {% if not info %}
+    <div class="col-sm-12 alert alert-danger" role="alert">
+        <h4 class="alert-heading">Dados insuficientes!</h4>
+        <p>Não é possível apresentar um planejamento sem os dados necessários para realizar o cálculo do Churrasco.</p>
+        <hr>
+        <p class="mb-0">Por favor, volte a página inicial e preencha o formulário apropriadamente.</p>
+    </div>
+    {% else  %}
+    <div class="col-md-12">
+        {{ render_info(info.qtd_carne) }}
+        {{ render_info(info.qtd_bebida) }}
+
+        <div class="form-group row">
+            <label class="col-sm-2">Opções de entrega</label>
+            <ul class="col-sm-5 list-group">
+            {% for opcao in info.opcoes_entrega %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span class="badge badge-primary">{{ info.opcoes_entrega[opcao] }}</span>
+            </li>
+            {% endfor %}
+            </ul>
+        </div>
+        &nbsp;
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
