@@ -2,7 +2,7 @@ from flask import Flask, render_template, render_template_string, url_for, redir
 from flask_wtf import FlaskForm, CSRFProtect
 from wtforms import StringField, IntegerField, validators
 
-from src import config, results
+from src import config, results, validator
 
 application = Flask(__name__)
 application.secret_key = config.FLASK_SECRET
@@ -17,7 +17,10 @@ class CalculateForm(FlaskForm):
     )
     cpf = StringField(
         u'CPF do organizador',
-        [validators.InputRequired("Campo obrigatório. Por favor, preencha com um CPF válido.")]
+        [
+            validators.InputRequired("Campo obrigatório. Por favor, preencha com um CPF válido."),
+            validator.validate_cpf
+        ]
     )
     qtd_convidados = IntegerField(
         u'Quantidade de convidados',
@@ -43,5 +46,5 @@ def calculate():
         flash("Successfully calculated!")
         return render_template("view-results.html", info=results.calculate())
     else:
-        return render_template("view-form.html", form=form)
+        return render_template("view-form.html", form=form), 400
 
