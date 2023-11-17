@@ -2,3 +2,6 @@ Flask
 Flask-WTF
 pytest
 load_dotenv
+pytest-mock
+brazilcep
+colorlog
