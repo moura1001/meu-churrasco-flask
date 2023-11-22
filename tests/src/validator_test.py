@@ -17,7 +17,7 @@ def client(flask_context):
 def test_validate_cpf(client):
     with client:
         invalid_cpf = "invalid"
-        ignored_cep = "06194-010"
+        ignored_cep = "06194010"
         form_data = {'cpf':invalid_cpf, 'cep': ignored_cep, 'qtd_convidados': 32}
         response = client.post("/", data=form_data)
 
@@ -37,18 +37,18 @@ def test_validate_cpf(client):
 
 def test_validate_cep(client):
     with client:
-        invalid_cep = "invalid"
+        invalid_cep1 = "invalid"
         valid_cpf = "532.617.840-08"
-        form_data = {'cpf':valid_cpf, 'cep': invalid_cep, 'qtd_convidados': 32}
+        form_data = {'cpf':valid_cpf, 'cep': invalid_cep1, 'qtd_convidados': 32}
         response = client.post("/", data=form_data)
 
         assert response.status_code == 400
         
-        valid_cep = "06194-010"
-        form_data = {'cpf':valid_cpf, 'cep': valid_cep, 'qtd_convidados': 32}
+        invalid_cep2 = "06194099"
+        form_data = {'cpf':valid_cpf, 'cep': invalid_cep2, 'qtd_convidados': 32}
         response = client.post("/", data=form_data)
 
-        assert response.status_code == 200
+        assert response.status_code == 400
         
         valid_cep2 = "06194010"
         form_data = {'cpf':valid_cpf, 'cep': valid_cep2, 'qtd_convidados': 32}

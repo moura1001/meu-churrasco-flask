@@ -23,7 +23,8 @@ Resultado
             <ul class="col-sm-5 list-group">
             {% for opcao in info.opcoes_entrega %}
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                <span class="badge badge-primary">{{ info.opcoes_entrega[opcao] }}</span>
+                <span class="badge badge-primary">{{ info.opcoes_entrega[opcao].delivery_option }}</span>
+                <span class="badge badge-primary">{{ info.opcoes_entrega[opcao].delivery_fee }}</span>
             </li>
             {% endfor %}
             </ul>

@@ -47,8 +47,13 @@ def calculate():
     "Calculate Churrasco"
     form = CalculateForm()
     if form.validate_on_submit():
-        flash("Successfully calculated!")
-        return render_template("view-results.html", info=results.calculate())
+        try:
+            info = results.calculate()
+            flash("Successfully calculated!")
+            return render_template("view-results.html", info=info)
+        except Exception as err:
+            flash(f"Error to calculate. Details: {err}")
+            return render_template("view-form.html", form=form), 500            
     else:
         return render_template("view-form.html", form=form), 400
 

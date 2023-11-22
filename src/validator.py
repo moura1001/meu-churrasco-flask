@@ -1,3 +1,4 @@
+import time
 import re
 from brazilcep import get_address_from_cep, exceptions, WebService
 
@@ -49,15 +50,16 @@ def validate_cep(form, field):
     formatacao = False
     quant_digitos = False
     
-    # Verifica a estrutura do CEP (11222-333). Pontuação não é obrigatória
+    # Verifica a estrutura do CEP (11222-333)
     if re.match(r"\d{5}-?\d{3}", cep):
         formatacao = True
     
-    if len(numeros) == 8 and (len(cep) == 8 or len(cep) == 9):
+    if len(numeros) == 8 and len(cep) == 8:
         quant_digitos = True
     
+    # Pontuação não permitida para reaproveitar a entrada no WebService dos Correios
     if not formatacao or not quant_digitos:
-        raise ValidationError("CEP mal formatado")
+        raise ValidationError("CEP mal formatado. Utilize apenas os números")
     
     try:
         get_address_from_cep(cep, timeout=2, webservice=WebService.VIACEP)

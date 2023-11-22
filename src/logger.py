@@ -2,7 +2,7 @@ import sys
 import logging
 import colorlog
 
-mylogger = logging.getLogger("")
+mylogger = logging.getLogger("mylogger")
 mylogger.setLevel(logging.DEBUG)
 sh = logging.StreamHandler(sys.stdout)
 #formatter = logging.Formatter("[%(asctime)s] %(levelname)s [%(filename)s.%(funcName)s:%(lineno)d] %(message)s", datefmt="%a, %d %b %Y %H:%M:%S")
